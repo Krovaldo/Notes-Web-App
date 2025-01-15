@@ -34,10 +34,10 @@ func (n *Note) DeleteNote(db *sqlx.DB) error {
 	return err
 }
 
-func (n *Note) GetNotesByUser(db *sqlx.DB, userId int) ([]Note, error) {
+func (n *Note) GetNotesByUser(db *sqlx.DB, userID int) ([]Note, error) {
 	var notes []Note
 	query := `SELECT id, title, content, created_at, updated_at FROM notes WHERE user_id=:user_id`
-	err := db.Select(&notes, query, userId)
+	err := db.Select(&notes, query, userID)
 	return notes, err
 }
 
