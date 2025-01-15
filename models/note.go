@@ -1,8 +1,9 @@
 package models
 
 import (
-	"github.com/jmoiron/sqlx"
 	"time"
+
+	"github.com/jmoiron/sqlx"
 )
 
 type Note struct {
@@ -32,6 +33,7 @@ func (n *Note) DeleteNote(db *sqlx.DB) error {
 	_, err := db.NamedExec(query, n)
 	return err
 }
+
 func (n *Note) GetNotesByUser(db *sqlx.DB, userId int) ([]Note, error) {
 	var notes []Note
 	query := `SELECT id, title, content, created_at, updated_at FROM notes WHERE user_id=:user_id`
