@@ -17,11 +17,8 @@ func (u *User) CreateUser(db *sqlx.DB) error {
 		return err
 	}
 
-	query := `INSERT into users (email, password) VALUES (:email, :password) RETURNING id`
-	return db.QueryRowx(query, map[string]interface{}{
-		"email":    u.Email,
-		"password": string(hashedPassword),
-	}).Scan(&u.ID)
+	query := `INSERT into users (email, password) VALUES ($1, $2) RETURNING id`
+	return db.QueryRowx(query, u.Email, string(hashedPassword)).Scan(&u.ID)
 }
 
 func GetUserByEmail(db *sqlx.DB, email string) (*User, error) {
