@@ -1,13 +1,15 @@
 package handlers
 
 import (
-	"NotesWebApp/models"
-	"github.com/gorilla/mux"
-	"github.com/jmoiron/sqlx"
 	"html/template"
 	"log"
 	"net/http"
 	"strconv"
+
+	"github.com/gorilla/mux"
+	"github.com/jmoiron/sqlx"
+
+	"NotesWebApp/models"
 )
 
 type NoteHandler struct {

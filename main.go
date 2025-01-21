@@ -1,12 +1,14 @@
 package main
 
 import (
-	"NotesWebApp/database"
-	"NotesWebApp/handlers"
-	"github.com/gorilla/mux"
-	"github.com/joho/godotenv"
 	"log"
 	"net/http"
+
+	"github.com/gorilla/mux"
+	"github.com/joho/godotenv"
+
+	"NotesWebApp/database"
+	"NotesWebApp/handlers"
 )
 
 func main() {

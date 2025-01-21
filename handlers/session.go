@@ -1,9 +1,10 @@
 package handlers
 
 import (
-	"github.com/gorilla/sessions"
 	"log"
 	"os"
+
+	"github.com/gorilla/sessions"
 )
 
 var (

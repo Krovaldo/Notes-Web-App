@@ -1,12 +1,14 @@
 package handlers
 
 import (
-	"NotesWebApp/models"
-	"github.com/jmoiron/sqlx"
-	"golang.org/x/crypto/bcrypt"
 	"html/template"
 	"log"
 	"net/http"
+
+	"github.com/jmoiron/sqlx"
+	"golang.org/x/crypto/bcrypt"
+
+	"NotesWebApp/models"
 )
 
 type AuthHandler struct {
