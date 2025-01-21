@@ -6,10 +6,9 @@ import (
 	"net/http"
 	"strconv"
 
+	"NotesWebApp/models"
 	"github.com/gorilla/mux"
 	"github.com/jmoiron/sqlx"
-
-	"NotesWebApp/models"
 )
 
 type NoteHandler struct {

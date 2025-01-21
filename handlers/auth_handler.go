@@ -5,10 +5,9 @@ import (
 	"log"
 	"net/http"
 
+	"NotesWebApp/models"
 	"github.com/jmoiron/sqlx"
 	"golang.org/x/crypto/bcrypt"
-
-	"NotesWebApp/models"
 )
 
 type AuthHandler struct {

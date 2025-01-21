@@ -4,11 +4,10 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/gorilla/mux"
-	"github.com/joho/godotenv"
-
 	"NotesWebApp/database"
 	"NotesWebApp/handlers"
+	"github.com/gorilla/mux"
+	"github.com/joho/godotenv"
 )
 
 func main() {
