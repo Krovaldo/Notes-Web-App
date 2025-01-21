@@ -1,6 +1,8 @@
 package models
 
 import (
+	"database/sql"
+	"errors"
 	"time"
 
 	"github.com/jmoiron/sqlx"
@@ -44,8 +46,14 @@ func (n *Note) GetNotesByUser(db *sqlx.DB, userID int) ([]Note, error) {
 
 func GetNoteByID(db *sqlx.DB, id int) (*Note, error) {
 	var note Note
-	query := `SELECT id, title, content, created_at, updated_at FROM notes WHERE id=$1`
+	query := `SELECT id, title, content, user_id, created_at, updated_at FROM notes WHERE id=$1`
 
 	err := db.Get(&note, query, id)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, nil
+		}
+		return nil, err
+	}
 	return &note, err
 }

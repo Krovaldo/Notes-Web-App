@@ -2,7 +2,6 @@ package models
 
 import (
 	"github.com/jmoiron/sqlx"
-	"golang.org/x/crypto/bcrypt"
 )
 
 type User struct {
@@ -12,13 +11,8 @@ type User struct {
 }
 
 func (u *User) CreateUser(db *sqlx.DB) error {
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(u.Password), bcrypt.DefaultCost)
-	if err != nil {
-		return err
-	}
-
 	query := `INSERT into users (email, password) VALUES ($1, $2) RETURNING id`
-	return db.QueryRowx(query, u.Email, string(hashedPassword)).Scan(&u.ID)
+	return db.QueryRowx(query, u.Email, u.Password).Scan(&u.ID)
 }
 
 func GetUserByEmail(db *sqlx.DB, email string) (*User, error) {
