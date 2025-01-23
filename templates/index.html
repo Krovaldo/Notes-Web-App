@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes App</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <h1>My Notes</h1>
+    <a href="/notes/create">Create New Note</a>
+    <ul>
+        {{range .}}
+        <li>
+            <h2>{{.Title}}</h2>
+            <p>{{.Content}}</p>
+            <a href="/notes/edit/{{.ID}}">Edit</a>
+            <form action="/notes/delete/{{.ID}}" method="POST">
+                <button type="submit">Delete</button>
+            </form>
+        </li>
+        {{end}}
+    </ul>
+    <form action="/logout" method="POST">
+        <button type="submit">Logout</button>
+    </form>
+</body>
+</html>
