@@ -3,12 +3,22 @@ package main
 import (
 	"log"
 	"net/http"
+	"time"
 
 	"NotesWebApp/database"
 	"NotesWebApp/handlers"
+
 	"github.com/gorilla/mux"
+	"github.com/jmoiron/sqlx"
 	"github.com/joho/godotenv"
 )
+
+func runServer(db *sqlx.DB, server *http.Server) error {
+	defer db.Close()
+
+	log.Println("Server is running on port 8080...")
+	return server.ListenAndServe()
+}
 
 func main() {
 	err := godotenv.Load(".env") // Загружаем переменные окружения
@@ -22,7 +32,6 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer db.Close()
 
 	router := mux.NewRouter() // инициализация роутера
 
@@ -48,6 +57,16 @@ func main() {
 
 	router.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
+	server := &http.Server{
+		Addr:         ":8080",
+		Handler:      router,
+		ReadTimeout:  10 * time.Second,
+		WriteTimeout: 10 * time.Second,
+		IdleTimeout:  30 * time.Second,
+	}
+
 	log.Println("Server is running on port 8080...")
-	log.Fatal(http.ListenAndServe(":8080", router))
+	if err := runServer(db, server); err != nil {
+		log.Fatal("Server error:", err)
+	}
 }

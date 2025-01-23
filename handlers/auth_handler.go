@@ -5,9 +5,10 @@ import (
 	"log"
 	"net/http"
 
-	"NotesWebApp/models"
 	"github.com/jmoiron/sqlx"
 	"golang.org/x/crypto/bcrypt"
+
+	"NotesWebApp/models"
 )
 
 type AuthHandler struct {
@@ -32,7 +33,7 @@ func (ah *AuthHandler) Index(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/notes", http.StatusFound)
 }
 
-func (ah *AuthHandler) LoginForm(w http.ResponseWriter, r *http.Request) {
+func (ah *AuthHandler) LoginForm(w http.ResponseWriter, _ *http.Request) {
 	tmpl := template.Must(template.ParseFiles("templates/login.html"))
 	err := tmpl.Execute(w, nil)
 	if err != nil {
@@ -68,11 +69,11 @@ func (ah *AuthHandler) Login(w http.ResponseWriter, r *http.Request) {
 		log.Println("Can't save session:", err)
 		return
 	}
-	log.Println("User logged in successfully:", user.ID) //123
+	log.Println("User logged in successfully:", user.ID)
 	http.Redirect(w, r, "/notes", http.StatusFound)
 }
 
-func (ah *AuthHandler) RegisterForm(w http.ResponseWriter, r *http.Request) {
+func (ah *AuthHandler) RegisterForm(w http.ResponseWriter, _ *http.Request) {
 	tmpl := template.Must(template.ParseFiles("templates/register.html"))
 	err := tmpl.Execute(w, nil)
 	if err != nil {

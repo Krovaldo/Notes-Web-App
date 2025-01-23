@@ -47,7 +47,7 @@ func (nh *NoteHandler) GetNotes(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (nh *NoteHandler) CreateNoteForm(w http.ResponseWriter, r *http.Request) {
+func (nh *NoteHandler) CreateNoteForm(w http.ResponseWriter, _ *http.Request) {
 	tmpl := template.Must(template.ParseFiles("templates/create.html"))
 	err := tmpl.Execute(w, nil)
 	if err != nil {
@@ -151,12 +151,12 @@ func (nh *NoteHandler) EditNote(w http.ResponseWriter, r *http.Request) {
 	if note == nil {
 		http.Error(w, "Note not found", http.StatusNotFound)
 		return
-	} else {
-		if note.UserID != userID {
-			log.Printf("User %d tried to edit note %d belonging to user %d", userID, note.ID, note.UserID)
-			http.Error(w, "You do not have permission to edit this note", http.StatusForbidden)
-			return
-		}
+	}
+
+	if note.UserID != userID {
+		log.Printf("User %d tried to edit note %d belonging to user %d", userID, note.ID, note.UserID)
+		http.Error(w, "You do not have permission to edit this note", http.StatusForbidden)
+		return
 	}
 
 	title := r.FormValue("title")
@@ -201,12 +201,12 @@ func (nh *NoteHandler) DeleteNote(w http.ResponseWriter, r *http.Request) {
 	if note == nil {
 		http.Error(w, "Note not found", http.StatusNotFound)
 		return
-	} else {
-		if note.UserID != userID {
-			log.Printf("User %d tried to edit note %d belonging to user %d", userID, note.ID, note.UserID)
-			http.Error(w, "You do not have permission to edit this note", http.StatusForbidden)
-			return
-		}
+	}
+
+	if note.UserID != userID {
+		log.Printf("User %d tried to edit note %d belonging to user %d", userID, note.ID, note.UserID)
+		http.Error(w, "You do not have permission to edit this note", http.StatusForbidden)
+		return
 	}
 
 	if err := note.DeleteNote(nh.DB); err != nil {
