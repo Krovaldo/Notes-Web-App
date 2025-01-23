@@ -24,7 +24,7 @@ jobs:
         uses: golangci/golangci-lint-action@v2
         with:
           version: latest
-          args: --out-format=colored-line-number --config=.golangci.yml --fix
+          args: --config=.golangci.yml --fix
 
   test:
     runs-on: ubuntu-latest
