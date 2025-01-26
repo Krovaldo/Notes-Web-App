@@ -10,5 +10,20 @@ services:
       - "${APP_DB_PORT}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    container_name: notes_app
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: ${APP_DB_USER}
+      DB_PASSWORD: ${APP_DB_PASSWORD}
+      DB_NAME: ${APP_DB_NAME}
+    ports:
+      - "8080:8080"
+
 volumes:
   postgres_data:

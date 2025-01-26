@@ -11,7 +11,7 @@ type User struct {
 }
 
 func (u *User) CreateUser(db *sqlx.DB) error {
-	query := `INSERT into users (email, password) VALUES ($1, $2) RETURNING id`
+	query := `INSERT INTO users (email, password) VALUES ($1, $2) RETURNING id`
 	return db.QueryRowx(query, u.Email, u.Password).Scan(&u.ID)
 }
 
