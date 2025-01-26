@@ -65,7 +65,6 @@ func main() {
 		IdleTimeout:  30 * time.Second,
 	}
 
-	log.Println("Server is running on port 8080...")
 	if err := runServer(db, server); err != nil {
 		log.Fatal("Server error:", err)
 	}

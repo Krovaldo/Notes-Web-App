@@ -49,6 +49,7 @@ func (ah *AuthHandler) Login(w http.ResponseWriter, r *http.Request) {
 	user, err := models.GetUserByEmail(ah.DB, email)
 	if err != nil {
 		http.Error(w, "User not found: invalid credentials", http.StatusUnauthorized)
+		return
 	}
 
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)); err != nil {
